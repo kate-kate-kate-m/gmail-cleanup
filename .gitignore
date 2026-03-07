@@ -1,0 +1,9 @@
+credentials.json
+token.json
+venv/
+*.log
+scan_results.json
+action_results.json
+last_delivered.txt
+__pycache__/
+*.pyc
