@@ -67,9 +67,5 @@ Do this for about a month until the inbox is consistently clean.
 
 ## Session log
 
-### 2026-03-07 — GitHub Actions cloud scheduling
-- Set up GitHub Actions to run autosort and substackdeliver 24/7, even when Mac is closed
-- Repo pushed to github.com/kate-kate-kate-m/gmail-cleanup (public — no credentials in repo)
-- credentials.json and token.json stored as encrypted GitHub Secrets
-- autosort runs every 10 min, substackdeliver runs every 15 min (delivers once/day at 4pm ET)
-- Local launchd agents still run in parallel when Mac is open (harmless overlap)
+### 2026-03-07
+- Added GitHub Actions workflows to run autosort and substackdeliver in the cloud
