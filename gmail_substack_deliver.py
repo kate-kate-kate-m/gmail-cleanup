@@ -9,20 +9,7 @@ from googleapiclient.discovery import build
 SCOPES = ['https://www.googleapis.com/auth/gmail.modify']
 CREDS_FILE = os.path.join(os.path.dirname(__file__), 'credentials.json')
 TOKEN_FILE = os.path.join(os.path.dirname(__file__), 'token.json')
-FLAG_FILE = os.path.join(os.path.dirname(__file__), 'last_delivered.txt')
 DELIVER_HOUR_ET = 16  # 4pm ET
-
-
-def already_delivered_today():
-    if not os.path.exists(FLAG_FILE):
-        return False
-    with open(FLAG_FILE) as f:
-        return f.read().strip() == datetime.date.today().isoformat()
-
-
-def mark_delivered():
-    with open(FLAG_FILE, 'w') as f:
-        f.write(datetime.date.today().isoformat())
 
 
 def get_service():
@@ -40,52 +27,54 @@ def get_service():
     return build('gmail', 'v1', credentials=creds)
 
 
+def get_or_create_label(service, name):
+    labels = service.users().labels().list(userId='me').execute().get('labels', [])
+    for label in labels:
+        if label['name'] == name:
+            return label['id']
+    label = service.users().labels().create(
+        userId='me',
+        body={'name': name, 'labelListVisibility': 'labelHide', 'messageListVisibility': 'hide'}
+    ).execute()
+    return label['id']
+
+
 def main():
-    # Only deliver at/after 4pm ET, and only once per day
+    # Only deliver at/after 4pm ET
     now_et = datetime.datetime.now(ZoneInfo('America/New_York'))
     if now_et.hour < DELIVER_HOUR_ET:
         print(f"Not yet 4pm ET (currently {now_et.strftime('%I:%M %p')} ET) — skipping")
         return
-    if already_delivered_today():
-        print("Already delivered today — skipping")
-        return
 
     service = get_service()
 
-    # Find the Substack label
-    labels = service.users().labels().list(userId='me').execute().get('labels', [])
-    substack_label_id = next((l['id'] for l in labels if l['name'] == 'Substack'), None)
+    # Get or create the tracking label
+    delivered_label_id = get_or_create_label(service, 'substack-delivered')
 
-    if not substack_label_id:
-        print("No Substack label found — nothing to deliver")
-        return
-
-    # Find messages in Substack holding folder from the last 24 hours (not yet in inbox)
+    # Find Substack emails from the last 24 hours that haven't been delivered yet
     messages = []
     result = service.users().messages().list(
-        userId='me', q='label:Substack -in:inbox newer_than:1d', maxResults=500
+        userId='me', q='label:Substack -in:inbox -label:substack-delivered newer_than:1d', maxResults=500
     ).execute()
     messages.extend(result.get('messages', []))
     while 'nextPageToken' in result:
         result = service.users().messages().list(
-            userId='me', q='label:Substack -in:inbox newer_than:1d',
+            userId='me', q='label:Substack -in:inbox -label:substack-delivered newer_than:1d',
             maxResults=500, pageToken=result['nextPageToken']
         ).execute()
         messages.extend(result.get('messages', []))
 
     if not messages:
         print("No Substack emails to deliver")
-        mark_delivered()
         return
 
     for msg in messages:
         service.users().messages().modify(
             userId='me',
             id=msg['id'],
-            body={'addLabelIds': ['INBOX']}
+            body={'addLabelIds': ['INBOX', delivered_label_id]}
         ).execute()
 
-    mark_delivered()
     print(f"Delivered {len(messages)} Substack email(s) to inbox")
 
 
