@@ -21,11 +21,7 @@ Runs automatically every 10 minutes via launchd. Moves emails matching certain r
 Logs activity to `autosort.log`.
 
 ### gmail_substack_deliver.py
-Runs automatically every 15 minutes via launchd, but only delivers once per day at/after 4pm ET. Finds all emails in the **Substack** label that arrived in the last 24 hours and adds them back to your inbox — so you get your Substack newsletters in one batch in the afternoon instead of throughout the day.
-
-If your Mac was closed at 4pm, delivery happens within 15 minutes of opening it. Tracks whether delivery has already happened today in `last_delivered.txt`.
-
-Logs activity to `substackdeliver.log`.
+Runs automatically every 15 minutes via GitHub Actions, but only delivers emails that haven't been delivered yet. At/after 4pm ET, finds all emails in the **Substack** label from the last 24 hours that don't have the `substack-delivered` Gmail label, moves them to your inbox, and stamps them with `substack-delivered` so they're never re-delivered — even after you read and file them away.
 
 ### gmail_archive.py
 One-time script. Creates a "2025 archive" label and moves all inbox emails older than December 4, 2025 into it.
@@ -69,3 +65,6 @@ Do this for about a month until the inbox is consistently clean.
 
 ### 2026-03-07
 - Added GitHub Actions workflows to run autosort and substackdeliver in the cloud
+
+### 2026-03-08
+- Fixed bug in `gmail_substack_deliver.py` where Substack emails were re-delivered to inbox every 15 minutes after 4pm. Root cause: the script used a local flag file (`last_delivered.txt`) to track delivery, but GitHub Actions uses a fresh runner each run so the file never persisted. Fix: replaced flag file with a hidden Gmail label (`substack-delivered`) that gets stamped on each email at delivery time. The search query now excludes already-delivered emails.
