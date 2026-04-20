@@ -19,6 +19,38 @@ RETAILER_DOMAINS = [
     'libro.fm',
     'grammarly.com',
     'canva.com',
+    'westelm.com',
+    'lululemon.com',
+    'beistravel.com',
+    'ruggable.com',
+    'playasociety.com',
+    'mthdbyus.com',
+    'afterpay.com',
+    'shopifyemail.com',
+    'nike.com',
+    'shefitapparel.com',
+    'shop.affirm.com',
+    'bazaarvoice-cgc.com',
+    'narvar.com',
+    'meine-studios.com',
+    'partnernotification.capitalone.com',
+]
+
+NEWSLETTER_DOMAINS = [
+    'readtangle.com',
+    'livewellbehappy.com',
+    'healthycoachhub.com',
+    'relentlessmethod.com',
+    'benbruno.com',
+    'crooked.com',
+    'ideabrowser.com',
+    'stockmarkethour.com',
+    'beehiiv.com',
+    'peterattiamd.com',
+    'authormaxmonroe.com',
+    'luma-mail.com',
+    'createcultivate.com',
+    'goodreads.com',
 ]
 
 
@@ -79,7 +111,9 @@ def main():
 
     # Move Substack emails out of inbox into holding folder
     # Exclude emails already labeled Substack — those have been delivered and should stay in inbox
-    substack_msgs = get_messages(service, 'in:inbox from:(@substack.com) -label:Substack')
+    newsletter_from = ' '.join(f'from:(@{d})' for d in NEWSLETTER_DOMAINS)
+    substack_query = f'in:inbox {{from:(@substack.com) {newsletter_from}}} -label:Substack'
+    substack_msgs = get_messages(service, substack_query)
     if substack_msgs:
         move_messages(service, substack_msgs, [substack_label_id], ['INBOX'])
         print(f"Moved {len(substack_msgs)} Substack email(s) to holding folder")

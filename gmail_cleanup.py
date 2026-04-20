@@ -118,6 +118,21 @@ ALREADY_HANDLED = {
     'donotreply-membercomm@email.anthem.com', 'no-reply+8f04252d@toast-restaurants.com',
     'no-reply@ashbyhq.com', 'no-reply@booksy.com',
     'noreply.invitations@trustpilotmail.com', 'noreply@email.legalzoom.com',
+    # Batch 5
+    'hello@timeleft.com', 'hello@send.checkmatetoday.com',
+    'info@update.rackroomshoes.com', 'hello@votefwd.org',
+    'news@email.webbyawards.com', 'hello@831stories.com',
+    'no-reply@cuddlduds.com', 'info@marketing.mlbemail.com',
+    'hello@news.na.hyrox.com', 'info@email-nmss.org',
+    'info@jewishaction.us', 'marketing@evebyboz.com',
+    'hello@hello-sunshine.com', 'info@filmpittsburgh.org',
+    'hello@knkg.com', 'americanexpress@member.americanexpress.com',
+    'info@eml.upstart.com', 'info@hudsonsailing.org',
+    'info@arborteas.com', 'info@email.signalaward.com',
+    'info@sheshouldrun.org', 'formfitnessbk@info-formfitnessbk.com',
+    'hello@libro.fm', 'info@morancompany.com',
+    'hello@marisafalcon.com', 'simong@goldenpenwriting.info',
+    'info@jfrej.org', 'no-reply@youtube.com',
 }
 
 

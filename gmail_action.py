@@ -211,6 +211,35 @@ UNSUBSCRIBE_SENDERS = [
     'noreply@h5.hilton.com',                 # Hilton Honors
     'noreply@e.stmarysclothingdrive.com',    # St. Mary's Clothing Drive
     'no-reply+8f04252d@toast-restaurants.com', # Bodrum restaurant
+    # --- Batch 5 ---
+    'hello@timeleft.com',                    # Timeleft
+    'hello@send.checkmatetoday.com',         # Favorite Daughter x Checkmate
+    'info@update.rackroomshoes.com',         # Rack Room Shoes
+    'hello@votefwd.org',                     # Vote Forward
+    'news@email.webbyawards.com',            # The Webby Awards
+    'hello@831stories.com',                  # 831 Stories
+    'no-reply@cuddlduds.com',                # Cuddl Duds
+    'info@marketing.mlbemail.com',           # MLB Insider
+    'hello@news.na.hyrox.com',               # HYROX World USA
+    'info@email-nmss.org',                   # National MS Society
+    'info@jewishaction.us',                  # Bend the Arc: Jewish Action
+    'marketing@evebyboz.com',               # Eve by Boz
+    'hello@hello-sunshine.com',              # Hello Sunshine
+    'info@filmpittsburgh.org',               # Film Pittsburgh
+    'hello@knkg.com',                        # KNKG
+    'americanexpress@member.americanexpress.com', # Amex Offers
+    'info@eml.upstart.com',                  # Upstart
+    'info@hudsonsailing.org',                # Hudson River Community Sailing
+    'info@arborteas.com',                    # Arbor Teas
+    'info@email.signalaward.com',            # Signal Awards News
+    'info@sheshouldrun.org',                 # She Should Run
+    'formfitnessbk@info-formfitnessbk.com', # Form Fitness
+    'hello@libro.fm',                        # Libro.fm
+    'info@morancompany.com',                 # The Moran Company
+    'hello@marisafalcon.com',               # Marisa Falcon
+    'simong@goldenpenwriting.info',          # Simon Golden
+    'info@jfrej.org',                        # JFREJ
+    'no-reply@youtube.com',                  # YouTube TV
 ]
 
 # ==============================================================================
