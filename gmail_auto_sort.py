@@ -34,6 +34,13 @@ RETAILER_DOMAINS = [
     'narvar.com',
     'meine-studios.com',
     'partnernotification.capitalone.com',
+    'mmlafleur.com',
+    'shopfavoritedaughter.com',
+    'sevlaser.com',
+    'cieleathletics.com',
+    'f45training.com',
+    'stubhub.com',
+    'medallia.com',
 ]
 
 NEWSLETTER_DOMAINS = [
@@ -51,6 +58,9 @@ NEWSLETTER_DOMAINS = [
     'luma-mail.com',
     'createcultivate.com',
     'goodreads.com',
+    'insightfulword.com',
+    'goodword.com',
+    'tobemagnetic.com',
 ]
 
 
@@ -111,8 +121,8 @@ def main():
 
     # Move Substack emails out of inbox into holding folder
     # Exclude emails already labeled Substack — those have been delivered and should stay in inbox
-    newsletter_from = ' '.join(f'from:(@{d})' for d in NEWSLETTER_DOMAINS)
-    substack_query = f'in:inbox {{from:(@substack.com) {newsletter_from}}} -label:Substack'
+    newsletter_from = ' '.join(f'from:({d})' for d in NEWSLETTER_DOMAINS)
+    substack_query = f'in:inbox {{from:(substack.com) {newsletter_from}}} -label:Substack'
     substack_msgs = get_messages(service, substack_query)
     if substack_msgs:
         move_messages(service, substack_msgs, [substack_label_id], ['INBOX'])
@@ -121,7 +131,7 @@ def main():
         print("No new Substack emails in inbox")
 
     # Move retailer emails out of inbox into 2026 Shopping
-    retailer_query = 'in:inbox {' + ' '.join(f'from:(@{d})' for d in RETAILER_DOMAINS) + '}'
+    retailer_query = 'in:inbox {' + ' '.join(f'from:({d})' for d in RETAILER_DOMAINS) + '}'
     retailer_msgs = get_messages(service, retailer_query)
     if retailer_msgs:
         move_messages(service, retailer_msgs, [shopping_label_id], ['INBOX'])
