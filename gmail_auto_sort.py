@@ -41,6 +41,36 @@ RETAILER_DOMAINS = [
     'f45training.com',
     'stubhub.com',
     'medallia.com',
+    'loft.com',
+    'soma.com',
+    'sojournpottery.com',
+    'zeelool.com',
+    'bradsdeals.com',
+    'eloquii.com',
+    'adidas.com',
+    'soldout.nyc',
+    'heyhanni.com',
+    'slicelife.com',
+    'credobeauty.com',
+    'tnuck.com',
+    'fanaticscommerce.com',
+    'asos.com',
+    'catbirdnyc.com',
+    'nomasei.com',
+    'strapsicle.com',
+    'newyorkornowhere.com',
+    'etsy.com',
+    'chewy.com',
+    'dickssportinggoods.com',
+    'shop.app',
+    'returntokora.com',
+]
+
+POLITICAL_DOMAINS = [
+    'passmedicareforall.org',
+    'boldpac.com',
+    'patryanforcongress.com',
+    'ginafortexas.com',
 ]
 
 NEWSLETTER_DOMAINS = [
@@ -118,6 +148,7 @@ def main():
 
     substack_label_id = get_or_create_label(service, 'Substack')
     shopping_label_id = get_or_create_label(service, '2026 Shopping')
+    political_label_id = get_or_create_label(service, '2026 Political')
 
     # Move Substack emails out of inbox into holding folder
     # Exclude emails already labeled Substack — those have been delivered and should stay in inbox
@@ -138,6 +169,15 @@ def main():
         print(f"Moved {len(retailer_msgs)} retailer email(s) to 2026 Shopping")
     else:
         print("No new retailer emails in inbox")
+
+    # Move political fundraising emails out of inbox into 2026 Political
+    political_query = 'in:inbox {' + ' '.join(f'from:({d})' for d in POLITICAL_DOMAINS) + '}'
+    political_msgs = get_messages(service, political_query)
+    if political_msgs:
+        move_messages(service, political_msgs, [political_label_id], ['INBOX'])
+        print(f"Moved {len(political_msgs)} political email(s) to 2026 Political")
+    else:
+        print("No new political emails in inbox")
 
 
 if __name__ == '__main__':
