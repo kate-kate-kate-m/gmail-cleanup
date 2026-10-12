@@ -64,6 +64,25 @@ RETAILER_DOMAINS = [
     'dickssportinggoods.com',
     'shop.app',
     'returntokora.com',
+    'ekster.com',
+    'gorjana.com',
+    'castleflexx.com',
+    'plainjanenewyork.com',
+    'greatjonesgoods.com',
+    'bartonperreira.com',
+    'getcanopy.co',
+    'fiveirongolf.com',
+    'sollishealth.com',
+    'parsleyhealth.com',
+    'purebarre.com',
+    'salt-escapes.com',
+    'elfster.com',
+    'ihg.com',
+    'sonesta.com',
+    'guestreservations.com',
+    'creditkarma.com',
+    'citicards@info15.citi.com',
+    'thankyou.citi.com',
 ]
 
 POLITICAL_DOMAINS = [
@@ -71,6 +90,11 @@ POLITICAL_DOMAINS = [
     'boldpac.com',
     'patryanforcongress.com',
     'ginafortexas.com',
+    'kathyhochul.com',
+    'dnc.org',
+    'bendthearc.us',
+    'votesaveamerica.com',
+    'ncdp.org',
 ]
 
 NEWSLETTER_DOMAINS = [
@@ -91,6 +115,32 @@ NEWSLETTER_DOMAINS = [
     'insightfulword.com',
     'goodword.com',
     'tobemagnetic.com',
+]
+
+
+GENERAL_NEWSLETTER_DOMAINS = [
+    'weather.com',
+    'moneywitch.com',
+    'gallup.com',
+    'gabbybernstein.com',
+    'janellehardy.com',
+    'kmcgheecoaching.com',
+    'ifttt.com',
+    'chiefofstaff.network',
+    'getwingapp.com',
+    'edgilitytalent.com',
+    'nrgconsultinggroup.org',
+    'inclusv.com',
+    'nychousingconnect@hpd.nyc.gov',
+    'michiganhillel@umich.edu',
+]
+
+SPORTS_DOMAINS = [
+    'newyorkcityruns.com',
+    'usalacrosse.com',
+    'premierlacrosseleague.com',
+    'tempobasketball.com',
+    'powermonkeyfitness.com',
 ]
 
 
@@ -178,6 +228,26 @@ def main():
         print(f"Moved {len(political_msgs)} political email(s) to 2026 Political")
     else:
         print("No new political emails in inbox")
+
+    # General newsletters and community mail: archive to 2026 Newsletters (not delivered like Substack)
+    news_label_id = get_or_create_label(service, '2026 Newsletters')
+    news_query = 'in:inbox {' + ' '.join(f'from:({d})' for d in GENERAL_NEWSLETTER_DOMAINS) + '}'
+    news_msgs = get_messages(service, news_query)
+    if news_msgs:
+        move_messages(service, news_msgs, [news_label_id], ['INBOX'])
+        print(f"Moved {len(news_msgs)} newsletter email(s) to 2026 Newsletters")
+    else:
+        print("No new general newsletter emails in inbox")
+
+    # Sports and fitness marketing: archive to 2026/Sports
+    sports_label_id = get_or_create_label(service, '2026/Sports')
+    sports_query = 'in:inbox {' + ' '.join(f'from:({d})' for d in SPORTS_DOMAINS) + '}'
+    sports_msgs = get_messages(service, sports_query)
+    if sports_msgs:
+        move_messages(service, sports_msgs, [sports_label_id], ['INBOX'])
+        print(f"Moved {len(sports_msgs)} sports email(s) to 2026/Sports")
+    else:
+        print("No new sports emails in inbox")
 
 
 if __name__ == '__main__':
