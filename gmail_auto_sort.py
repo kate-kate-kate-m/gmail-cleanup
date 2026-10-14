@@ -83,6 +83,24 @@ RETAILER_DOMAINS = [
     'creditkarma.com',
     'citicards@info15.citi.com',
     'thankyou.citi.com',
+    'elementhealing.com',
+    'formfitnessbk.com',
+    'info-formfitnessbk.com',
+    'angelikafilmcenter.com',
+    'turbotax.intuit.com',
+    'engage.covetruspharmacy.com',
+    'heyrecipe.com',
+    'potterybarn.com',
+    'lendingclub.com',
+    'mobilize.us',
+    'adhdnutritionistllc.com',
+    'bkse.com',
+    'avodah.net',
+]
+
+RECEIPT_DOMAINS = [
+    'paypal.com',
+    'nurx.com',
 ]
 
 POLITICAL_DOMAINS = [
@@ -133,6 +151,10 @@ GENERAL_NEWSLETTER_DOMAINS = [
     'inclusv.com',
     'nychousingconnect@hpd.nyc.gov',
     'michiganhillel@umich.edu',
+    'sublime.app',
+    'edgilitysearch.com',
+    'on-ramps.com',
+    'googlegroups.com',
 ]
 
 SPORTS_DOMAINS = [
@@ -219,6 +241,16 @@ def main():
         print(f"Moved {len(retailer_msgs)} retailer email(s) to 2026 Shopping")
     else:
         print("No new retailer emails in inbox")
+
+    # Move receipts out of inbox into 2026/2026 Receipts
+    receipts_label_id = get_or_create_label(service, '2026/2026 Receipts')
+    receipt_query = 'in:inbox {' + ' '.join(f'from:({d})' for d in RECEIPT_DOMAINS) + '}'
+    receipt_msgs = get_messages(service, receipt_query)
+    if receipt_msgs:
+        move_messages(service, receipt_msgs, [receipts_label_id], ['INBOX'])
+        print(f"Moved {len(receipt_msgs)} receipt email(s) to 2026/2026 Receipts")
+    else:
+        print("No new receipt emails in inbox")
 
     # Move political fundraising emails out of inbox into 2026 Political
     political_query = 'in:inbox {' + ' '.join(f'from:({d})' for d in POLITICAL_DOMAINS) + '}'
