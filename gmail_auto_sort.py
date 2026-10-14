@@ -99,8 +99,12 @@ RETAILER_DOMAINS = [
 ]
 
 RECEIPT_DOMAINS = [
-    'paypal.com',
     'nurx.com',
+]
+
+# Senders that also send non-receipt mail, so match on subject too
+RECEIPT_QUERIES = [
+    'from:(service@paypal.com) subject:USD',
 ]
 
 POLITICAL_DOMAINS = [
@@ -244,7 +248,7 @@ def main():
 
     # Move receipts out of inbox into 2026/2026 Receipts
     receipts_label_id = get_or_create_label(service, '2026/2026 Receipts')
-    receipt_query = 'in:inbox {' + ' '.join(f'from:({d})' for d in RECEIPT_DOMAINS) + '}'
+    receipt_query = 'in:inbox {' + ' '.join([f'from:({d})' for d in RECEIPT_DOMAINS] + [f'({q})' for q in RECEIPT_QUERIES]) + '}'
     receipt_msgs = get_messages(service, receipt_query)
     if receipt_msgs:
         move_messages(service, receipt_msgs, [receipts_label_id], ['INBOX'])
