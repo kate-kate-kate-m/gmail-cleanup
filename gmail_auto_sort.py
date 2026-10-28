@@ -96,10 +96,19 @@ RETAILER_DOMAINS = [
     'adhdnutritionistllc.com',
     'bkse.com',
     'avodah.net',
+    'dsw.com',
+    'target.com',
+    'bedbathandbeyond.com',
+    'nuuly.com',
 ]
 
 RECEIPT_DOMAINS = [
     'nurx.com',
+    'invoice@stripe.com',
+    'invoice@btwb.com',
+    'invoice@750words.com',
+    'order.eventbrite.com',
+    'momence.com',
 ]
 
 # Senders that also send non-receipt mail, so match on subject too
@@ -159,6 +168,13 @@ GENERAL_NEWSLETTER_DOMAINS = [
     'edgilitysearch.com',
     'on-ramps.com',
     'googlegroups.com',
+    'proskauerblogs.com',
+    'readtangle.com',
+    'peterattiamd.com',
+    'feastandfettle.com',
+    'town.com',
+    'me.sh',
+    'ideabrowser.com',
 ]
 
 SPORTS_DOMAINS = [
